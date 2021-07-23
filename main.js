@@ -4,6 +4,8 @@ import * as THREE from 'three';
 
 import * as ShaderFrog from 'shaderfrog-runtime';
 
+import * as TweenMax from 'gsap'
+
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -82,7 +84,7 @@ loader.load('/models/glTF/locomocion2D.glb', function ( locomociongltf ) {
     console.error( error );
 });
 
-loader.load('/models/glTF/clay1.glb', function ( clay1gltf ) {
+loader.load('/models/glTF/trampolin.glb', function ( clay1gltf ) {
     var clay1 = clay1gltf.scene;
     clay13D.add(clay1);
     clay1.traverse (function (child) {
@@ -91,8 +93,8 @@ loader.load('/models/glTF/clay1.glb', function ( clay1gltf ) {
         }
     });
     mixerclay1 = new THREE.AnimationMixer(clay1gltf.scene);
-    var action = mixerclay1.clipAction( clay1gltf.animations[0] );
-    action.play();
+    var action1 = mixerclay1.clipAction( clay1gltf.animations[0]).play();
+    var action2 = mixerclay1.clipAction( clay1gltf.animations[1]).play();
     scene.add(clay1);
 }, undefined, function ( error ) {
     console.error( error );
@@ -175,7 +177,7 @@ function animate() {
 
     mixer2Dloc.update( delta );
 
-    //mixerclay1.update( delta );
+    mixerclay1.update( delta );
 
     renderer.render(scene, camera);
 
