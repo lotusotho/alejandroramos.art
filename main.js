@@ -2,10 +2,11 @@ import './style.css'
 
 import * as THREE from 'three';
 
+import * as ShaderFrog from 'shaderfrog-runtime';
+
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { Vector3 } from 'three';
 
 const scene = new THREE.Scene();
 
@@ -29,6 +30,7 @@ var clock = new THREE.Clock();
 
 renderer.setPixelRatio( window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.outputEncoding = THREE.sRGBEncoding;
 
 renderer.render(scene, camera);
 
@@ -45,7 +47,6 @@ const locomocion2D = new THREE.Object3D();
 const clay13D = new THREE.Object3D();
 
 loader.load('/models/glTF/mesa.glb', function ( tablegltf ) {
-    renderer.outputEncoding = THREE.sRGBEncoding;
     var table = tablegltf.scene;
     table3D.add(table);
     mixertable = new THREE.AnimationMixer(tablegltf.scene);
@@ -66,7 +67,6 @@ loader.load('/models/glTF/litleo.glb', function ( litleogltf ) {
 });
 
 loader.load('/models/glTF/locomocion2D.glb', function ( locomociongltf ) {
-    renderer.outputEncoding = THREE.sRGBEncoding;
     var locomocion = locomociongltf.scene;
     locomocion2D.add(locomocion);
     locomocion.traverse (function (child) {
@@ -98,8 +98,8 @@ loader.load('/models/glTF/clay1.glb', function ( clay1gltf ) {
     console.error( error );
 });
 
-const planegeo = new THREE.PlaneGeometry(500, 300, 100, 100);
-    const planemat = new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0.5, depthTest: true})
+const planegeo = new THREE.PlaneGeometry(1000, 300, 100, 100);
+    const planemat = new THREE.MeshPhongMaterial({color: 0x80c1ff, transparent: true, opacity: 0.5, depthTest: true})
     const plane = new THREE.Mesh(planegeo, planemat);
     plane.traverse (function (child) {
         if (child instanceof THREE.Mesh) {
@@ -108,8 +108,20 @@ const planegeo = new THREE.PlaneGeometry(500, 300, 100, 100);
     });
     scene.add(plane);
     plane.rotation.x = 45;
-    plane.position.z = 45;
+    plane.position.z = -70;
     plane.renderOrder = 4;
+
+const cubegeo = new THREE.SphereGeometry(3, 50, 50);
+const cubepix = new THREE.Mesh(cubegeo);
+plane.traverse (function (child) {
+        if (child instanceof THREE.Mesh) {
+            child.frustumCulled = false;
+        }
+    });
+    scene.add(cubepix);
+    cubepix.position.setZ(-10);
+    cubepix.position.setY(-33);
+    cubepix.position.setX(10);
 //scene.add(torus1);
 
 const pointLight = new THREE.PointLight(0xffffff)
@@ -125,7 +137,7 @@ scene.add(lightHelper, gridHelper);
 const controls =  new OrbitControls(camera, renderer.domElement);
 
 function addStar() {
-    const geometry = new THREE.SphereGeometry();
+    const geometry = new THREE.SphereGeometry(1.5, 20, 20);
     const material = new THREE.MeshBasicMaterial({color: 0xffffff})
     const star = new THREE.Mesh(geometry, material);
 
@@ -136,17 +148,28 @@ function addStar() {
     star.position.set(x, y, z);
     star.scale.set(randomscale, randomscale, randomscale);
     scene.add(star)
+    star.material.shading = THREE.SmoothShading;
 }
 
 Array(100).fill().forEach(addStar);
 
-//Textures
-const spaceTexture = new THREE.TextureLoader().load('/models/textures/mesalayout.png');
+// Shaders
+var runtime = new ShaderFrog();
+var sunsettexture = new THREE.TextureLoader().load( '/models/textures/sanfrancisco-sunset.jpg' );
+runtime.load( '/models/Shaders/BallDeform.json', function( shaderData ) {
+    var ballshadermat = runtime.get( shaderData.name );
+    cubepix.material = ballshadermat;
+    runtime.updateShaders( clock.getElapsedTime() );
+});
+// Textures
 
+// Animations
 function animate() {
     requestAnimationFrame(animate);
 
     const delta = clock.getDelta();
+
+    var time = clock.getElapsedTime();
 
     mixertable.update( delta );
 
@@ -155,6 +178,8 @@ function animate() {
     //mixerclay1.update( delta );
 
     renderer.render(scene, camera);
+
+    runtime.updateShaders( time );
 }
 
 animate();
