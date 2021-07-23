@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { Vector3 } from 'three';
 
 const scene = new THREE.Scene();
 
@@ -20,8 +21,7 @@ const renderer = new THREE.WebGLRenderer({
     antialias: true,
 });
 
-var mixertable;
-var mixer2Dloc;
+var mixertable, mixer2Dloc, mixerclay1;
 
 scene.background = new THREE.Color( 0x061121 );
 
@@ -42,6 +42,7 @@ const loader = new GLTFLoader();
 const table3D = new THREE.Object3D();
 const litleo3D = new THREE.Object3D();
 const locomocion2D = new THREE.Object3D();
+const clay13D = new THREE.Object3D();
 
 loader.load('/models/glTF/mesa.glb', function ( tablegltf ) {
     renderer.outputEncoding = THREE.sRGBEncoding;
@@ -50,7 +51,8 @@ loader.load('/models/glTF/mesa.glb', function ( tablegltf ) {
     mixertable = new THREE.AnimationMixer(tablegltf.scene);
     var action = mixertable.clipAction( tablegltf.animations[0] );
     action.play();
-    scene.add(tablegltf.scene);
+    scene.add(table);
+    table.renderOrder = 0;
 }, undefined, function ( error ) {
     console.error( error );
 });
@@ -58,7 +60,7 @@ loader.load('/models/glTF/mesa.glb', function ( tablegltf ) {
 loader.load('/models/glTF/litleo.glb', function ( litleogltf ) {
     var litleo = litleogltf.scene;
     litleo3D.add(litleo);
-    scene.add(litleogltf.scene);
+    scene.add(litleo);
 }, undefined, function ( error ) {
     console.error( error );
 });
@@ -75,11 +77,39 @@ loader.load('/models/glTF/locomocion2D.glb', function ( locomociongltf ) {
     mixer2Dloc = new THREE.AnimationMixer(locomociongltf.scene);
     var action = mixer2Dloc.clipAction( locomociongltf.animations[0] );
     action.play();
-    scene.add(locomociongltf.scene);
+    scene.add(locomocion);
 }, undefined, function ( error ) {
     console.error( error );
 });
 
+loader.load('/models/glTF/clay1.glb', function ( clay1gltf ) {
+    var clay1 = clay1gltf.scene;
+    clay13D.add(clay1);
+    clay1.traverse (function (child) {
+        if (child instanceof THREE.Mesh) {
+            child.frustumCulled = false;
+        }
+    });
+    mixerclay1 = new THREE.AnimationMixer(clay1gltf.scene);
+    var action = mixerclay1.clipAction( clay1gltf.animations[0] );
+    action.play();
+    scene.add(clay1);
+}, undefined, function ( error ) {
+    console.error( error );
+});
+
+const planegeo = new THREE.PlaneGeometry(500, 300, 100, 100);
+    const planemat = new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0.5, depthTest: true})
+    const plane = new THREE.Mesh(planegeo, planemat);
+    plane.traverse (function (child) {
+        if (child instanceof THREE.Mesh) {
+            child.frustumCulled = false;
+        }
+    });
+    scene.add(plane);
+    plane.rotation.x = 45;
+    plane.position.z = 45;
+    plane.renderOrder = 4;
 //scene.add(torus1);
 
 const pointLight = new THREE.PointLight(0xffffff)
@@ -121,6 +151,8 @@ function animate() {
     mixertable.update( delta );
 
     mixer2Dloc.update( delta );
+
+    //mixerclay1.update( delta );
 
     renderer.render(scene, camera);
 }
