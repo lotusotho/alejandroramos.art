@@ -1,12 +1,12 @@
 import './style.css'
 
-import * as THREE from 'three';
+import * as THREE from 'https://cdn.skypack.dev/three@0.130.1';
 
-import * as ShaderFrog from 'shaderfrog-runtime';
+import * as ShaderFrog from 'https://cdn.skypack.dev/shaderfrog-runtime';
 
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { OrbitControls } from 'https://cdn.skypack.dev/three@0.130.1/examples/jsm/controls/OrbitControls';
 
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.130.1/examples/jsm/loaders/GLTFLoader.js';
 
 const scene = new THREE.Scene();
 
@@ -156,9 +156,9 @@ pointLight.position.set(5,5,30)
 const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(pointLight, ambientLight);
 
-const lightHelper = new THREE.PointLightHelper(pointLight)
-const gridHelper = new THREE.GridHelper(200, 50);
-scene.add(lightHelper, gridHelper);
+// const lightHelper = new THREE.PointLightHelper(pointLight)
+// const gridHelper = new THREE.GridHelper(200, 50);
+// scene.add(lightHelper, gridHelper);
 
 const controls =  new OrbitControls(camera, renderer.domElement);
 controls.enabled = false;

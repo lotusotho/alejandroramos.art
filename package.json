@@ -1,10 +1,32 @@
 {
   "name": "paginaportfolio",
   "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^2.4.3"
+  },
   "dependencies": {
     "cross-env": "^7.0.3",
     "shaderfrog-runtime": "^0.2.0",
     "three": "^0.130.1",
-    "tilt.js": "^1.2.1"
-  }
+    "tilt.js": "^1.2.1",
+    "vite": "^2.4.3"
+  },
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lotusotho/portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lotusotho/portfolio/issues"
+  },
+  "homepage": "https://github.com/lotusotho/portfolio#readme",
+  "description": ""
 }
