@@ -1,6 +1,6 @@
 {
-  "name": "paginitaportfolio",
-  "version": "0.0.0",
+  "name": "paginaportfolio",
+  "version": "1.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "cross-env": "^7.0.3",
-    "gsap": "^1.20.3",
     "shaderfrog-runtime": "^0.2.0",
     "three": "^0.130.1",
     "tilt.js": "^1.2.1"
