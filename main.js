@@ -2,7 +2,7 @@ import './style.css'
 
 import * as THREE from 'https://cdn.skypack.dev/three@0.130.1';
 
-import * as ShaderFrog from 'https://cdn.skypack.dev/shaderfrog-runtime';
+import * as ShaderFrog from 'shaderfrog-runtime';
 
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.130.1/examples/jsm/controls/OrbitControls';
 
