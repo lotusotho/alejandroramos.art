@@ -1,0 +1,97 @@
+{
+  "id": 5375,
+  "name": "StarsNormals",
+  "fragment": "precision highp float;\nprecision highp int;\nuniform float time;\nuniform float Warp_Speed1627308516578_101_speed;\nuniform float fadeAway;\nuniform vec3 Warp_Speed1627308516578_101_color;\nuniform vec2 mouse;\nuniform vec2 Warp_Speed1627308516578_101_resolution;\nuniform float uniformity;\nuniform float Star_Field1627308535346_114_speed;\nuniform vec2 Star_Field1627308535346_114_resolution;\nuniform mat4 modelMatrix;\nuniform mat4 modelViewMatrix;\nuniform mat4 projectionMatrix;\nuniform mat4 viewMatrix;\nuniform mat3 normalMatrix;\nuniform vec3 cameraPosition;\nuniform vec3 SO_Answer_627956911627308894283_428_color;\nuniform vec3 lightPosition;\nvarying vec2 Warp_Speed1627308516578_101_vUv;\nvarying vec2 Star_Field1627308535346_114_vUv;\nvec3 nrand3(vec2 co) \n                                                {\n                                                    vec3 a = fract(cos(co.x * 8.3e-3 + co.y) * vec3(1.3e5, 4.7e5, 2.9e5));\n                                                    vec3 b = fract(sin(co.x * 0.3e-3 + co.y) * vec3(8.1e5, 1.0e5, 0.1e5));\n                                                    vec3 c = mix(a, b, 0.5);\n                                                    return c;\n                                                }\nvarying vec3 SO_Answer_627956911627308894283_428_vPosition;\nvarying vec3 SO_Answer_627956911627308894283_428_vNormal;\nvarying vec2 SO_Answer_627956911627308894283_428_vUv;\nvarying vec2 SO_Answer_627956911627308894283_428_vUv2;\nvec4 Warp_Speed1627308516578_101_main(void) \n                                                {\n                                                    vec4 Warp_Speed1627308516578_101_gl_FragColor = vec4(0.0);\n                                                    float t = time * Warp_Speed1627308516578_101_speed;\n                                                    vec2 position = (Warp_Speed1627308516578_101_vUv.xy - Warp_Speed1627308516578_101_resolution.xy * .5) / Warp_Speed1627308516578_101_resolution.x;\n                                                    float angle = atan(position.y, position.x) / (2. * 3.14159265359);\n                                                    angle -= floor(angle);\n                                                    float rad = length(position);\n                                                    float angleFract = fract(angle * 256.);\n                                                    float angleRnd = floor(angle * 256.) + 1.;\n                                                    float angleRnd1 = fract(angleRnd * fract(angleRnd * .7235) * 45.1);\n                                                    float angleRnd2 = fract(angleRnd * fract(angleRnd * .82657) * 13.724);\n                                                    float t2 = t + angleRnd1 * uniformity;\n                                                    float radDist = sqrt(angleRnd2);\n                                                    float adist = radDist / rad * .1;\n                                                    float dist = (t2 * .1 + adist);\n                                                    dist = abs(fract(dist) - fadeAway);\n                                                    float outputColor = (1.0 / (dist)) * cos(0.7 * sin(t)) * adist / radDist / 30.0;\n                                                    angle = fract(angle + .61);\n                                                    Warp_Speed1627308516578_101_gl_FragColor = vec4(outputColor * Warp_Speed1627308516578_101_color, 1.0);\n                                                    return Warp_Speed1627308516578_101_gl_FragColor *= 1.0;\n                                                }\nvec4 Star_Field1627308535346_114_main(void) \n                                                {\n                                                    vec4 Star_Field1627308535346_114_gl_FragColor = vec4(0.0);\n                                                    vec2 p = Star_Field1627308535346_114_vUv.xy + (time * Star_Field1627308535346_114_speed);\n                                                    vec2 seed = p * 1.8;\n                                                    seed = floor(seed * Star_Field1627308535346_114_resolution);\n                                                    vec3 rnd = nrand3(seed);\n                                                    Star_Field1627308535346_114_gl_FragColor = vec4(pow(rnd.y, 10.0));\n                                                    return Star_Field1627308535346_114_gl_FragColor *= 1.0;\n                                                }\nvec4 SO_Answer_627956911627308894283_428_main() \n                                                {\n                                                    vec4 SO_Answer_627956911627308894283_428_gl_FragColor = vec4(0.0);\n                                                    vec3 worldPosition = (modelMatrix * vec4(SO_Answer_627956911627308894283_428_vPosition, 1.0)).xyz;\n                                                    vec3 worldNormal = normalize(vec3(modelMatrix * vec4(SO_Answer_627956911627308894283_428_vNormal, 0.0)));\n                                                    vec3 lightVector = normalize(lightPosition - worldPosition);\n                                                    float brightness = dot(worldNormal, lightVector);\n                                                    SO_Answer_627956911627308894283_428_gl_FragColor = vec4(worldNormal * brightness, 1.0);\n                                                    return SO_Answer_627956911627308894283_428_gl_FragColor *= 1.0;\n                                                }\nvoid main() \n                                                {\n                                                    gl_FragColor = (Star_Field1627308535346_114_main() + SO_Answer_627956911627308894283_428_main());                                                }\n",
+  "vertex": "precision highp float;\nprecision highp int;\nuniform mat4 modelMatrix;\nuniform mat4 modelViewMatrix;\nuniform mat4 projectionMatrix;\nuniform mat4 viewMatrix;\nuniform mat3 normalMatrix;\nuniform vec3 cameraPosition;\nuniform float time;\nuniform float D;\nattribute vec3 position;\nattribute vec3 normal;\nattribute vec2 uv;\nattribute vec2 uv2;\nvarying vec3 Warp_Speed1627308516578_101_vPosition;\nvarying vec3 Warp_Speed1627308516578_101_vNormal;\nvarying vec2 Warp_Speed1627308516578_101_vUv;\nvarying vec2 Warp_Speed1627308516578_101_vUv2;\nvarying vec3 Star_Field1627308535346_114_vPosition;\nvarying vec3 Star_Field1627308535346_114_vNormal;\nvarying vec2 Star_Field1627308535346_114_vUv;\nvarying vec2 Star_Field1627308535346_114_vUv2;\nvarying vec3 SO_Answer_627956911627308894283_428_vPosition;\nvarying vec3 SO_Answer_627956911627308894283_428_vNormal;\nvarying vec2 SO_Answer_627956911627308894283_428_vUv;\nvarying vec2 SO_Answer_627956911627308894283_428_vUv2;\nvec4 Warp_Speed1627308516578_101_main() \n                                                {\n                                                    vec4 Warp_Speed1627308516578_101_gl_Position = vec4(0.0);\n                                                    Warp_Speed1627308516578_101_vNormal = normal;\n                                                    Warp_Speed1627308516578_101_vUv = uv;\n                                                    Warp_Speed1627308516578_101_vUv2 = uv2;\n                                                    Warp_Speed1627308516578_101_vPosition = position;\n                                                    Warp_Speed1627308516578_101_gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n                                                    return Warp_Speed1627308516578_101_gl_Position *= 1.0;\n                                                }\nvec4 Star_Field1627308535346_114_main() \n                                                {\n                                                    vec4 Star_Field1627308535346_114_gl_Position = vec4(0.0);\n                                                    Star_Field1627308535346_114_vNormal = normal;\n                                                    Star_Field1627308535346_114_vUv = uv;\n                                                    Star_Field1627308535346_114_vUv2 = uv2;\n                                                    Star_Field1627308535346_114_vPosition = position;\n                                                    Star_Field1627308535346_114_gl_Position = projectionMatrix * vec4(position, 1.0);\n                                                    return Star_Field1627308535346_114_gl_Position *= 1.0;\n                                                }\nvec4 SO_Answer_627956911627308894283_428_main() \n                                                {\n                                                    vec4 SO_Answer_627956911627308894283_428_gl_Position = vec4(0.0);\n                                                    SO_Answer_627956911627308894283_428_vNormal = normal;\n                                                    SO_Answer_627956911627308894283_428_vUv = uv;\n                                                    SO_Answer_627956911627308894283_428_vUv2 = uv2;\n                                                    SO_Answer_627956911627308894283_428_vPosition = position;\n                                                    float L = length(position);\n                                                    float scale = (L + D) / L;\n                                                    vec3 pos = position * scale;\n                                                    SO_Answer_627956911627308894283_428_gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);\n                                                    return SO_Answer_627956911627308894283_428_gl_Position *= 1.0;\n                                                }\nvoid main() \n                                                {\n                                                    gl_Position = Warp_Speed1627308516578_101_main() + Star_Field1627308535346_114_main() + SO_Answer_627956911627308894283_428_main();                                                }\n",
+  "uniforms": {
+    "cameraPosition": {
+      "type": "v3",
+      "glslType": "vec3"
+    },
+    "time": {
+      "type": "f",
+      "glslType": "float"
+    },
+    "mouse": {
+      "value": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "type": "v2",
+      "glslType": "vec2"
+    },
+    "fadeAway": {
+      "value": "0.5",
+      "type": "f",
+      "glslType": "float"
+    },
+    "uniformity": {
+      "value": "10",
+      "type": "f",
+      "glslType": "float"
+    },
+    "Warp_Speed1627308516578_101_speed": {
+      "value": "3",
+      "type": "f",
+      "glslType": "float"
+    },
+    "Warp_Speed1627308516578_101_resolution": {
+      "value": {
+        "x": ".5",
+        "y": ".5"
+      },
+      "type": "v2",
+      "glslType": "vec2"
+    },
+    "Warp_Speed1627308516578_101_color": {
+      "value": {
+        "r": 0.8745098039215686,
+        "g": 0.5725490196078431,
+        "b": 0.058823529411764705
+      },
+      "type": "c",
+      "glslType": "vec3"
+    },
+    "Star_Field1627308535346_114_speed": {
+      "value": "0.005",
+      "type": "f",
+      "glslType": "float"
+    },
+    "Star_Field1627308535346_114_resolution": {
+      "value": {
+        "x": "1000",
+        "y": "1000"
+      },
+      "type": "v2",
+      "glslType": "vec2"
+    },
+    "lightPosition": {
+      "value": {
+        "x": 0,
+        "y": 1.25,
+        "z": 1.25
+      },
+      "type": "v3",
+      "glslType": "vec3"
+    },
+    "D": {
+      "value": "0",
+      "type": "f",
+      "glslType": "float"
+    },
+    "SO_Answer_627956911627308894283_428_color": {
+      "value": {
+        "r": 0.6823529411764706,
+        "g": 0.8862745098039215,
+        "b": 0.2235294117647059
+      },
+      "type": "c",
+      "glslType": "vec3"
+    }
+  },
+  "url": "http://shaderfrog.com/app/view/5375",
+  "user": {
+    "username": "lotusotho",
+    "url": "http://shaderfrog.com/app/profile/andrewray"
+  }
+}

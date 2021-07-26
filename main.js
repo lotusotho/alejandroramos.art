@@ -77,7 +77,8 @@ loader.load('/models/glTF/locomocion2D.glb', function ( locomociongltf ) {
     mixer2Dloc = new THREE.AnimationMixer(locomociongltf.scene);
     var action = mixer2Dloc.clipAction( locomociongltf.animations[0] );
     action.play();
-    scene.add(locomocion);
+    scene.add(locomocion2D);
+    locomocion2D.position.setX(5);
 }, undefined, function ( error ) {
     console.error( error );
 });
@@ -121,19 +122,32 @@ cubepix.traverse (function (child) {
     scene.add(cubepix);
     cubepix.position.setZ(-10);
     cubepix.position.setY(-35);
-    cubepix.position.setX(10);
-
-const spheregeo = new THREE.TorusKnotGeometry(1, 0.25, 254, 8, 3, 4);
+    cubepix.position.setX(9);
+    
+const spheregeo = new THREE.TorusKnotGeometry(1, 0.25, 254, 8, 3, 5);
 const spherepix = new THREE.Mesh(spheregeo);
 spherepix.traverse (function (child) {
         if (child instanceof THREE.Mesh) {
             child.frustumCulled = false;
         }
     });
-    scene.add(spherepix);
     spherepix.position.setZ(-10);
-    spherepix.position.setY(-35);
+    spherepix.position.setY(-66);
     spherepix.position.setX(-5);
+    scene.add(spherepix);
+
+const cubestaticgeo = new THREE.BoxGeometry(3, 5);
+const cubestaticmaterial = new THREE.MeshBasicMaterial({color: 0xe3ffa6});
+const cubestaticpix = new THREE.Mesh(cubestaticgeo, cubestaticmaterial);
+cubestaticpix.traverse (function (child) {
+            if (child instanceof THREE.Mesh) {
+                child.frustumCulled = false;
+            }
+        });
+        cubestaticpix.position.setZ(-10);
+        cubestaticpix.position.setY(-47);
+        cubestaticpix.position.setX(-5);
+        scene.add(cubestaticpix);
 //scene.add(torus1);
 
 const pointLight = new THREE.PointLight(0xffffff)
@@ -147,6 +161,7 @@ const gridHelper = new THREE.GridHelper(200, 50);
 scene.add(lightHelper, gridHelper);
 
 const controls =  new OrbitControls(camera, renderer.domElement);
+controls.enabled = false;
 
 function addStar() {
     const geometry = new THREE.SphereGeometry(1.5, 20, 20);
@@ -176,7 +191,7 @@ runtime.load( '/models/Shaders/BallDeform.json', function( shaderData ) {
 });
 
 // RippleKnot
-runtime.load( '/models/Shaders/StarsAlpha.json', function( shaderData ) {
+runtime.load( '/models/Shaders/StarsNormals.json', function( shaderData ) {
     var starsshadermat = runtime.get( shaderData.name );
     spherepix.material = starsshadermat;
     runtime.updateShaders( clock.getElapsedTime() );
@@ -202,13 +217,22 @@ function animate() {
     runtime.updateShaders( time );
 }
 
+// function animatetorus() {
+//     requestAnimationFrame(animatetorus);
+
+//     spherepix.rotation.z += 0.05;
+//     spherepix.rotation.z += 0.05;
+    
+
+//     renderer.render(scene, camera);
+// }
+
 animate();
 
 function moveCamera() {
     const t = document.body.getBoundingClientRect().top;
-    litleo3D.rotation.x += 0.05;
-    litleo3D.rotation.y += 0.075;
-    litleo3D.rotation.z += 0.05;
+    
+    cubestaticpix.scale.x += 0.2;
 
     camera.position.y = -t * -0.04;
     camera.position.z = t * -0.0002;
