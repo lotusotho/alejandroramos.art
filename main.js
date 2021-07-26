@@ -4,8 +4,6 @@ import * as THREE from 'three';
 
 import * as ShaderFrog from 'shaderfrog-runtime';
 
-import * as TweenMax from 'gsap'
-
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -115,15 +113,27 @@ const planegeo = new THREE.PlaneGeometry(1000, 300, 100, 100);
 
 const cubegeo = new THREE.SphereGeometry(3, 50, 50);
 const cubepix = new THREE.Mesh(cubegeo);
-plane.traverse (function (child) {
+cubepix.traverse (function (child) {
         if (child instanceof THREE.Mesh) {
             child.frustumCulled = false;
         }
     });
     scene.add(cubepix);
     cubepix.position.setZ(-10);
-    cubepix.position.setY(-33);
+    cubepix.position.setY(-35);
     cubepix.position.setX(10);
+
+const spheregeo = new THREE.TorusKnotGeometry(1, 0.25, 254, 8, 3, 4);
+const spherepix = new THREE.Mesh(spheregeo);
+spherepix.traverse (function (child) {
+        if (child instanceof THREE.Mesh) {
+            child.frustumCulled = false;
+        }
+    });
+    scene.add(spherepix);
+    spherepix.position.setZ(-10);
+    spherepix.position.setY(-35);
+    spherepix.position.setX(-5);
 //scene.add(torus1);
 
 const pointLight = new THREE.PointLight(0xffffff)
@@ -157,10 +167,18 @@ Array(100).fill().forEach(addStar);
 
 // Shaders
 var runtime = new ShaderFrog();
-var sunsettexture = new THREE.TextureLoader().load( '/models/textures/sanfrancisco-sunset.jpg' );
+
+// BallDeform
 runtime.load( '/models/Shaders/BallDeform.json', function( shaderData ) {
     var ballshadermat = runtime.get( shaderData.name );
     cubepix.material = ballshadermat;
+    runtime.updateShaders( clock.getElapsedTime() );
+});
+
+// RippleKnot
+runtime.load( '/models/Shaders/StarsAlpha.json', function( shaderData ) {
+    var starsshadermat = runtime.get( shaderData.name );
+    spherepix.material = starsshadermat;
     runtime.updateShaders( clock.getElapsedTime() );
 });
 // Textures

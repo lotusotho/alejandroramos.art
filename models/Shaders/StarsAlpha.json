@@ -1,0 +1,50 @@
+{
+  "id": 5375,
+  "name": "StarsAlpha",
+  "fragment": "precision highp float;\nprecision highp int;\nuniform float time;\nuniform float speed;\nuniform vec2 Star_Field1627293665998_23_resolution;\nuniform vec2 New_Basic_Shader1627296768829_42_resolution;\nuniform vec2 mouse;\nvarying vec2 Star_Field1627293665998_23_vUv;\nvec3 nrand3(vec2 co) \n                                                {\n                                                    vec3 a = fract(cos(co.x * 8.3e-3 + co.y) * vec3(1.3e5, 4.7e5, 2.9e5));\n                                                    vec3 b = fract(sin(co.x * 0.3e-3 + co.y) * vec3(8.1e5, 1.0e5, 0.1e5));\n                                                    vec3 c = mix(a, b, 0.5);\n                                                    return c;\n                                                }\nvarying vec2 New_Basic_Shader1627296768829_42_vUv;\nfloat smoothgrid(float spacing, float thickness, float alpha, vec2 position) \n                                                {\n                                                    vec2 posrep = mod(position, vec2(spacing)) - .5 * thickness;\n                                                    vec2 lines = alpha * max(vec2(0.0), min(thickness + posrep, thickness - posrep) / thickness);\n                                                    return max(lines.x, lines.y);\n                                                }\nvec4 Star_Field1627293665998_23_main(void) \n                                                {\n                                                    vec4 Star_Field1627293665998_23_gl_FragColor = vec4(0.0);\n                                                    vec2 p = Star_Field1627293665998_23_vUv.xy + (time * speed);\n                                                    vec2 seed = p * 1.8;\n                                                    seed = floor(seed * Star_Field1627293665998_23_resolution);\n                                                    vec3 rnd = nrand3(seed);\n                                                    Star_Field1627293665998_23_gl_FragColor = vec4(pow(rnd.y, 10.0));\n                                                    return Star_Field1627293665998_23_gl_FragColor *= 1.0;\n                                                }\nvec4 New_Basic_Shader1627296768829_42_main() \n                                                {\n                                                    vec4 New_Basic_Shader1627296768829_42_gl_FragColor = vec4(0.0);\n                                                    vec2 uv = (New_Basic_Shader1627296768829_42_vUv.xy) / New_Basic_Shader1627296768829_42_resolution.xx;\n                                                    vec3 blue = vec3(0.34, 0.34, 0.34);\n                                                    vec2 spacing = vec2(.496, 0.248);\n                                                    vec2 thickness = vec2(0.01, 0.015);\n                                                    vec2 alpha = vec2(0.9, 0.5);\n                                                    float thick_lines = smoothgrid(spacing.s, thickness.s, alpha.s, uv);\n                                                    float thin_lines = smoothgrid(spacing.t, thickness.t, alpha.t, uv);\n                                                    float erasure = 0.1;\n                                                    vec4 background = vec4(0);\n                                                    vec3 paper = max(blue, 0.35 * length(background.rgb));\n                                                    vec3 color = vec3(max(paper, sqrt(erasure * background.b + (1. - erasure)) * max(thick_lines, thin_lines)));\n                                                    New_Basic_Shader1627296768829_42_gl_FragColor = vec4(color, 1.0);\n                                                    return New_Basic_Shader1627296768829_42_gl_FragColor *= 0.0;\n                                                }\nvoid main() \n                                                {\n                                                    gl_FragColor = (Star_Field1627293665998_23_main() + New_Basic_Shader1627296768829_42_main());                                                }\n",
+  "vertex": "precision highp float;\nprecision highp int;\nuniform mat4 modelMatrix;\nuniform mat4 modelViewMatrix;\nuniform mat4 projectionMatrix;\nuniform mat4 viewMatrix;\nuniform mat3 normalMatrix;\nuniform vec3 cameraPosition;\nuniform float time;\nattribute vec3 position;\nattribute vec3 normal;\nattribute vec2 uv;\nattribute vec2 uv2;\nvarying vec3 Star_Field1627293665998_23_vPosition;\nvarying vec3 Star_Field1627293665998_23_vNormal;\nvarying vec2 Star_Field1627293665998_23_vUv;\nvarying vec2 Star_Field1627293665998_23_vUv2;\nvarying vec3 New_Basic_Shader1627296768829_42_vPosition;\nvarying vec3 New_Basic_Shader1627296768829_42_vNormal;\nvarying vec2 New_Basic_Shader1627296768829_42_vUv;\nvarying vec2 New_Basic_Shader1627296768829_42_vUv2;\nvec4 Star_Field1627293665998_23_main() \n                                                {\n                                                    vec4 Star_Field1627293665998_23_gl_Position = vec4(0.0);\n                                                    Star_Field1627293665998_23_vNormal = normal;\n                                                    Star_Field1627293665998_23_vUv = uv;\n                                                    Star_Field1627293665998_23_vUv2 = uv2;\n                                                    Star_Field1627293665998_23_vPosition = position;\n                                                    Star_Field1627293665998_23_gl_Position = projectionMatrix * vec4(position, 1.0);\n                                                    return Star_Field1627293665998_23_gl_Position *= 1.0;\n                                                }\nvec4 New_Basic_Shader1627296768829_42_main() \n                                                {\n                                                    vec4 New_Basic_Shader1627296768829_42_gl_Position = vec4(0.0);\n                                                    New_Basic_Shader1627296768829_42_vNormal = normal;\n                                                    New_Basic_Shader1627296768829_42_vUv = uv;\n                                                    New_Basic_Shader1627296768829_42_vUv2 = uv2;\n                                                    New_Basic_Shader1627296768829_42_vPosition = position;\n                                                    New_Basic_Shader1627296768829_42_gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n                                                    return New_Basic_Shader1627296768829_42_gl_Position *= 0.0;\n                                                }\nvoid main() \n                                                {\n                                                    gl_Position = Star_Field1627293665998_23_main() + New_Basic_Shader1627296768829_42_main();                                                }\n",
+  "uniforms": {
+    "cameraPosition": {
+      "type": "v3",
+      "glslType": "vec3"
+    },
+    "time": {
+      "type": "f",
+      "glslType": "float"
+    },
+    "speed": {
+      "value": "0.01",
+      "type": "f",
+      "glslType": "float"
+    },
+    "Star_Field1627293665998_23_resolution": {
+      "value": {
+        "x": "500",
+        "y": "500"
+      },
+      "type": "v2",
+      "glslType": "vec2"
+    },
+    "mouse": {
+      "value": {
+        "x": "0",
+        "y": 0
+      },
+      "type": "v2",
+      "glslType": "vec2"
+    },
+    "New_Basic_Shader1627296768829_42_resolution": {
+      "value": {
+        "x": "1",
+        "y": "0"
+      },
+      "type": "v2",
+      "glslType": "vec2"
+    }
+  },
+  "url": "http://shaderfrog.com/app/view/5375",
+  "user": {
+    "username": "lotusotho",
+    "url": "http://shaderfrog.com/app/profile/andrewray"
+  }
+}
