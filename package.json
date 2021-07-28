@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview  --host 92.58.71.75"
+    "serve": "vite preview"
   },
   "devDependencies": {
     "vite": "^2.4.3"
