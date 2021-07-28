@@ -2,7 +2,7 @@ import './style.css'
 
 import * as THREE from 'https://cdn.skypack.dev/three@0.130.1';
 
-import * as ShaderFrog from 'shaderfrog-runtime';
+// import * as ShaderFrog from 'shaderfrog-runtime';
 
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.130.1/examples/jsm/controls/OrbitControls';
 
@@ -28,6 +28,8 @@ scene.background = new THREE.Color( 0x061121 );
 
 var clock = new THREE.Clock();
 
+var mixers = [];
+
 renderer.setPixelRatio( window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputEncoding = THREE.sRGBEncoding;
@@ -46,19 +48,21 @@ const litleo3D = new THREE.Object3D();
 const locomocion2D = new THREE.Object3D();
 const clay13D = new THREE.Object3D();
 
-loader.load('./models/glTF/mesa.glb', function ( tablegltf ) {
+loader.load('/models/glTF/mesa.glb', function ( tablegltf ) {
     var table = tablegltf.scene;
     table3D.add(table);
     mixertable = new THREE.AnimationMixer(tablegltf.scene);
-    var action = mixertable.clipAction( tablegltf.animations[0] );
-    action.play();
+    mixers.push(mixertable);
+    tablegltf.animations.forEach(( clip ) => {
+        mixertable.clipAction(clip).play();
+    });
     scene.add(table);
     table.renderOrder = 0;
 }, undefined, function ( error ) {
     console.error( error );
 });
 
-loader.load('./models/glTF/litleo.glb', function ( litleogltf ) {
+loader.load('/models/glTF/litleo.glb', function ( litleogltf ) {
     var litleo = litleogltf.scene;
     litleo3D.add(litleo);
     scene.add(litleo);
@@ -66,24 +70,21 @@ loader.load('./models/glTF/litleo.glb', function ( litleogltf ) {
     console.error( error );
 });
 
-loader.load('./models/glTF/locomocion2D.glb', function ( locomociongltf ) {
+loader.load('/models/glTF/locomocion2D.glb', function ( locomociongltf ) {
     var locomocion = locomociongltf.scene;
     locomocion2D.add(locomocion);
-    locomocion.traverse (function (child) {
-        if (child instanceof THREE.Mesh) {
-            child.frustumCulled = false;
-        }
-    });
     mixer2Dloc = new THREE.AnimationMixer(locomociongltf.scene);
-    var action = mixer2Dloc.clipAction( locomociongltf.animations[0] );
-    action.play();
+    mixers.push(mixer2Dloc);
+    locomociongltf.animations.forEach(( clip ) => {
+        mixer2Dloc.clipAction(clip).play();
+    });
     scene.add(locomocion2D);
     locomocion2D.position.setX(5);
 }, undefined, function ( error ) {
     console.error( error );
 });
 
-loader.load('./models/glTF/trampolin.glb', function ( clay1gltf ) {
+loader.load('/models/glTF/trampolin.glb', function ( clay1gltf ) {
     var clay1 = clay1gltf.scene;
     clay13D.add(clay1);
     clay1.traverse (function (child) {
@@ -92,8 +93,10 @@ loader.load('./models/glTF/trampolin.glb', function ( clay1gltf ) {
         }
     });
     mixerclay1 = new THREE.AnimationMixer(clay1gltf.scene);
-    var action1 = mixerclay1.clipAction( clay1gltf.animations[0]).play();
-    var action2 = mixerclay1.clipAction( clay1gltf.animations[1]).play();
+    mixers.push(mixerclay1);
+    clay1gltf.animations.forEach(( clip ) => {
+        mixerclay1.clipAction(clip).play();
+    });
     scene.add(clay1);
 }, undefined, function ( error ) {
     console.error( error );
@@ -112,8 +115,9 @@ const planegeo = new THREE.PlaneGeometry(1000, 300, 100, 100);
     plane.position.z = -70;
     plane.renderOrder = 4;
 
-const cubegeo = new THREE.SphereGeometry(3, 50, 50);
-const cubepix = new THREE.Mesh(cubegeo);
+const cubegeo = new THREE.SphereGeometry(3, 30, 30);
+const cubemesh = new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true})
+const cubepix = new THREE.Mesh(cubegeo, cubemesh);
 cubepix.traverse (function (child) {
         if (child instanceof THREE.Mesh) {
             child.frustumCulled = false;
@@ -124,17 +128,17 @@ cubepix.traverse (function (child) {
     cubepix.position.setY(-35);
     cubepix.position.setX(9);
     
-const spheregeo = new THREE.TorusKnotGeometry(1, 0.25, 254, 8, 3, 5);
-const spherepix = new THREE.Mesh(spheregeo);
-spherepix.traverse (function (child) {
-        if (child instanceof THREE.Mesh) {
-            child.frustumCulled = false;
-        }
-    });
-    spherepix.position.setZ(-10);
-    spherepix.position.setY(-66);
-    spherepix.position.setX(-5);
-    scene.add(spherepix);
+// const spheregeo = new THREE.TorusKnotGeometry(1, 0.25, 254, 8, 3, 5);
+// const spherepix = new THREE.Mesh(spheregeo);
+// spherepix.traverse (function (child) {
+//         if (child instanceof THREE.Mesh) {
+//             child.frustumCulled = false;
+//         }
+//     });
+//     spherepix.position.setZ(-10);
+//     spherepix.position.setY(-66);
+//     spherepix.position.setX(-5);
+//     scene.add(spherepix);
 
 const cubestaticgeo = new THREE.BoxGeometry(3, 5);
 const cubestaticmaterial = new THREE.MeshBasicMaterial({color: 0xe3ffa6});
@@ -181,40 +185,44 @@ function addStar() {
 Array(100).fill().forEach(addStar);
 
 // Shaders
-var runtime = new ShaderFrog();
+// var runtime = new ShaderFrog();
 
-// BallDeform
-runtime.load( './models/Shaders/BallDeform.json', function( shaderData ) {
-    var ballshadermat = runtime.get( shaderData.name );
-    cubepix.material = ballshadermat;
-    runtime.updateShaders( clock.getElapsedTime() );
-});
+// // BallDeform
+// runtime.load( './models/Shaders/BallDeform.json', function( shaderData ) {
+//     var ballshadermat = runtime.get( shaderData.name );
+//     cubepix.material = ballshadermat;
+//     runtime.updateShaders( clock.getElapsedTime() );
+// });
 
-// RippleKnot
-runtime.load( './models/Shaders/StarsNormals.json', function( shaderData ) {
-    var starsshadermat = runtime.get( shaderData.name );
-    spherepix.material = starsshadermat;
-    runtime.updateShaders( clock.getElapsedTime() );
-});
+// // RippleKnot
+// runtime.load( './models/Shaders/StarsNormals.json', function( shaderData ) {
+//     var starsshadermat = runtime.get( shaderData.name );
+//     spherepix.material = starsshadermat;
+//     runtime.updateShaders( clock.getElapsedTime() );
+// });
 // Textures
-
 // Animations
 function animate() {
+    
     requestAnimationFrame(animate);
 
-    const delta = clock.getDelta();
+     const delta = clock.getDelta();
 
-    var time = clock.getElapsedTime();
+     for (var i = 0; i < mixers.length; ++ i) {
+         mixers[i].update( delta );
+     }
 
-    mixertable.update( delta );
+    //  mixertable.update( delta );
 
-    mixer2Dloc.update( delta );
+    // // var time = clock.getElapsedTime();
 
-    mixerclay1.update( delta );
+    //  mixer2Dloc.update( delta );
+
+    //  mixerclay1.update( delta );
 
     renderer.render(scene, camera);
 
-    runtime.updateShaders( time );
+    // runtime.updateShaders( time );
 }
 
 // function animatetorus() {
@@ -227,12 +235,20 @@ function animate() {
 //     renderer.render(scene, camera);
 // }
 
+// function render() {
+//     requestAnimationFrame(render);
+    
+//     renderer.render( scene, camera );
+// }
+
+// render();
 animate();
 
 function moveCamera() {
     const t = document.body.getBoundingClientRect().top;
     
     cubestaticpix.scale.x += 0.2;
+    cubepix.rotation.x += 0.05;
 
     camera.position.y = -t * -0.04;
     camera.position.z = t * -0.0002;

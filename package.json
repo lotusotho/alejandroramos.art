@@ -2,7 +2,9 @@
   "name": "paginaportfolio",
   "version": "1.0.0",
   "scripts": {
-    "dev": "vite --port 80"
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview --port 443"
   },
   "devDependencies": {
     "vite": "^2.4.3"
@@ -20,7 +22,7 @@
     "url": "git+https://github.com/lotusotho/portfolio.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Lotusotho",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/lotusotho/portfolio/issues"
