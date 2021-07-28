@@ -2,7 +2,7 @@
   "name": "paginaportfolio",
   "version": "1.0.0",
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
+    "dev": "vite",
     "build": "vite build",
     "serve": "vite preview"
   },
