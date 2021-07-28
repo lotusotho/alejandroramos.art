@@ -46,7 +46,7 @@ const litleo3D = new THREE.Object3D();
 const locomocion2D = new THREE.Object3D();
 const clay13D = new THREE.Object3D();
 
-loader.load('./models/glTF/mesa.glb', function ( tablegltf ) {
+loader.load('/models/glTF/mesa.glb', function ( tablegltf ) {
     var table = tablegltf.scene;
     table3D.add(table);
     mixertable = new THREE.AnimationMixer(tablegltf.scene);
@@ -58,7 +58,7 @@ loader.load('./models/glTF/mesa.glb', function ( tablegltf ) {
     console.error( error );
 });
 
-loader.load('./models/glTF/litleo.glb', function ( litleogltf ) {
+loader.load('/models/glTF/litleo.glb', function ( litleogltf ) {
     var litleo = litleogltf.scene;
     litleo3D.add(litleo);
     scene.add(litleo);
@@ -66,7 +66,7 @@ loader.load('./models/glTF/litleo.glb', function ( litleogltf ) {
     console.error( error );
 });
 
-loader.load('./models/glTF/locomocion2D.glb', function ( locomociongltf ) {
+loader.load('/models/glTF/locomocion2D.glb', function ( locomociongltf ) {
     var locomocion = locomociongltf.scene;
     locomocion2D.add(locomocion);
     locomocion.traverse (function (child) {
@@ -83,7 +83,7 @@ loader.load('./models/glTF/locomocion2D.glb', function ( locomociongltf ) {
     console.error( error );
 });
 
-loader.load('./models/glTF/trampolin.glb', function ( clay1gltf ) {
+loader.load('/models/glTF/trampolin.glb', function ( clay1gltf ) {
     var clay1 = clay1gltf.scene;
     clay13D.add(clay1);
     clay1.traverse (function (child) {
@@ -184,14 +184,14 @@ Array(100).fill().forEach(addStar);
 var runtime = new ShaderFrog();
 
 // BallDeform
-runtime.load( './models/Shaders/BallDeform.json', function( shaderData ) {
+runtime.load( '/models/Shaders/BallDeform.json', function( shaderData ) {
     var ballshadermat = runtime.get( shaderData.name );
     cubepix.material = ballshadermat;
     runtime.updateShaders( clock.getElapsedTime() );
 });
 
 // RippleKnot
-runtime.load( './models/Shaders/StarsNormals.json', function( shaderData ) {
+runtime.load( '/models/Shaders/StarsNormals.json', function( shaderData ) {
     var starsshadermat = runtime.get( shaderData.name );
     spherepix.material = starsshadermat;
     runtime.updateShaders( clock.getElapsedTime() );
