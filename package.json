@@ -2,7 +2,7 @@
   "name": "paginaportfolio",
   "version": "1.0.0",
   "scripts": {
-    "dev": "vite --host portfolioar.herokuapp.com",
+    "dev": "vite --host localhost",
     "build": "vite build",
     "serve": "vite preview"
   },
