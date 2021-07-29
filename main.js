@@ -1,8 +1,8 @@
 import './style.css'
 
-import * as THREE from 'https://cdn.skypack.dev/three@0.130.1';
+import * as THREE from 'three';
 
-// import * as ShaderFrog from 'shaderfrog-runtime';
+import ShaderRuntime from 'shaderfrog-runtime';
 
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.130.1/examples/jsm/controls/OrbitControls';
 
@@ -48,7 +48,7 @@ const litleo3D = new THREE.Object3D();
 const locomocion2D = new THREE.Object3D();
 const clay13D = new THREE.Object3D();
 
-loader.load('/models/glTF/mesa.glb', function ( tablegltf ) {
+loader.load('assets/models/glTF/glTF/mesa.glb', function ( tablegltf ) {
     var table = tablegltf.scene;
     table3D.add(table);
     mixertable = new THREE.AnimationMixer(tablegltf.scene);
@@ -62,7 +62,7 @@ loader.load('/models/glTF/mesa.glb', function ( tablegltf ) {
     console.error( error );
 });
 
-loader.load('/models/glTF/litleo.glb', function ( litleogltf ) {
+loader.load('assets/models/glTF/litleo.glb', function ( litleogltf ) {
     var litleo = litleogltf.scene;
     litleo3D.add(litleo);
     scene.add(litleo);
@@ -70,7 +70,7 @@ loader.load('/models/glTF/litleo.glb', function ( litleogltf ) {
     console.error( error );
 });
 
-loader.load('/models/glTF/locomocion2D.glb', function ( locomociongltf ) {
+loader.load('assets/models/glTF/locomocion2D.glb', function ( locomociongltf ) {
     var locomocion = locomociongltf.scene;
     locomocion2D.add(locomocion);
     mixer2Dloc = new THREE.AnimationMixer(locomociongltf.scene);
@@ -84,7 +84,7 @@ loader.load('/models/glTF/locomocion2D.glb', function ( locomociongltf ) {
     console.error( error );
 });
 
-loader.load('/models/glTF/trampolin.glb', function ( clay1gltf ) {
+loader.load('assets/models/glTF/trampolin.glb', function ( clay1gltf ) {
     var clay1 = clay1gltf.scene;
     clay13D.add(clay1);
     clay1.traverse (function (child) {
@@ -128,17 +128,17 @@ cubepix.traverse (function (child) {
     cubepix.position.setY(-35);
     cubepix.position.setX(9);
     
-// const spheregeo = new THREE.TorusKnotGeometry(1, 0.25, 254, 8, 3, 5);
-// const spherepix = new THREE.Mesh(spheregeo);
-// spherepix.traverse (function (child) {
-//         if (child instanceof THREE.Mesh) {
-//             child.frustumCulled = false;
-//         }
-//     });
-//     spherepix.position.setZ(-10);
-//     spherepix.position.setY(-66);
-//     spherepix.position.setX(-5);
-//     scene.add(spherepix);
+ const spheregeo = new THREE.TorusKnotGeometry(1, 0.25, 254, 8, 3, 5);
+ const spherepix = new THREE.Mesh(spheregeo);
+ spherepix.traverse (function (child) {
+         if (child instanceof THREE.Mesh) {
+             child.frustumCulled = false;
+         }
+     });
+     spherepix.position.setZ(-10);
+     spherepix.position.setY(-66);
+     spherepix.position.setX(-5);
+     scene.add(spherepix);
 
 const cubestaticgeo = new THREE.BoxGeometry(3, 5);
 const cubestaticmaterial = new THREE.MeshBasicMaterial({color: 0xe3ffa6});
@@ -185,21 +185,21 @@ function addStar() {
 Array(100).fill().forEach(addStar);
 
 // Shaders
-// var runtime = new ShaderFrog();
+var runtime = new ShaderRuntime();
 
 // // BallDeform
-// runtime.load( './models/Shaders/BallDeform.json', function( shaderData ) {
-//     var ballshadermat = runtime.get( shaderData.name );
-//     cubepix.material = ballshadermat;
-//     runtime.updateShaders( clock.getElapsedTime() );
-// });
+ runtime.load( 'assets/models/Shaders/BallDeform.json', function( shaderData ) {
+     var ballshadermat = runtime.get( shaderData.name );
+    cubepix.material = ballshadermat;
+    runtime.updateShaders( clock.getElapsedTime() );
+ });
 
-// // RippleKnot
-// runtime.load( './models/Shaders/StarsNormals.json', function( shaderData ) {
-//     var starsshadermat = runtime.get( shaderData.name );
-//     spherepix.material = starsshadermat;
-//     runtime.updateShaders( clock.getElapsedTime() );
-// });
+// RippleKnot
+ runtime.load( 'assets/models/Shaders/StarsNormals.json', function( shaderData ) {
+     var starsshadermat = runtime.get( shaderData.name );
+     spherepix.material = starsshadermat;
+     runtime.updateShaders( clock.getElapsedTime() );
+});
 // Textures
 // Animations
 function animate() {
