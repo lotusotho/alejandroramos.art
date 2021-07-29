@@ -1,1 +1,1 @@
-web: npm run inlined-preview
+web: npm run start

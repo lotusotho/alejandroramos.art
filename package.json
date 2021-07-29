@@ -7,7 +7,9 @@
     "serve": "vite build && vite preview",
     "inlined-build": "vite build --config vite.config.inlined.ts",
     "inlined-preview": "vite preview",
-    "inlined-preview-build": "vite build --config vite.config.inlined.ts && start ./dist/index.html"
+    "inlined-preview-build": "vite build --config vite.config.inlined.ts && start ./dist/index.html",
+    "postinstall": "npm run build",
+    "start": "node server.js"
   },
   "devDependencies": {
     "vite": "^2.4.3"
@@ -16,6 +18,8 @@
     "@vitejs/plugin-vue": "^1.3.0",
     "@vue/compiler-sfc": "^3.1.5",
     "cross-env": "^7.0.3",
+    "express": "^4.17.1",
+    "serve-static": "^1.14.1",
     "shaderfrog-runtime": "^0.2.0",
     "three": "^0.130.1",
     "tilt.js": "^1.2.1",
