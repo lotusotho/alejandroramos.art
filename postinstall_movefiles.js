@@ -1,9 +1,7 @@
-var fs = require('fs')
+const fs = require('fs');
 
-var oldPath = './models'
-var newPath = './dist/assets/'
-
-fs.rename(oldPath, newPath, function (err) {
-  if (err) throw err
-  console.log('Successfully renamed - AKA moved!')
-})
+// File destination.txt will be created or overwritten by default.
+fs.copyFile('./models', './dist/assets/', (err) => {
+  if (err) throw err;
+  console.log('source was copied to destination.txt');
+});
