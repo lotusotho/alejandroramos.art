@@ -8,7 +8,7 @@
     "inlined-build": "vite build --config vite.config.inlined.ts",
     "inlined-preview": "vite preview",
     "inlined-preview-build": "vite build --config vite.config.inlined.ts && start ./dist/index.html",
-    "postinstall": "npm run build",
+    "postinstall": "node postinstall_movefiles.js",
     "start": "node server.js"
   },
   "devDependencies": {
