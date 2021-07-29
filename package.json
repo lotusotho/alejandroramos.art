@@ -6,7 +6,7 @@
     "build": "vite build",
     "serve": "vite build && vite preview",
     "inlined-build": "vite build --config vite.config.inlined.ts",
-    "inlined-preview": "start /index.html",
+    "inlined-preview": "vite preview",
     "inlined-preview-build": "vite build --config vite.config.inlined.ts && start ./dist/index.html"
   },
   "devDependencies": {
