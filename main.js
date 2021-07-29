@@ -48,7 +48,7 @@ const litleo3D = new THREE.Object3D();
 const locomocion2D = new THREE.Object3D();
 const clay13D = new THREE.Object3D();
 
-loader.load('/dist/assets/models/glTF/mesa.glb', function ( tablegltf ) {
+loader.load('assets/models/glTF/mesa.glb', function ( tablegltf ) {
     var table = tablegltf.scene;
     table3D.add(table);
     mixertable = new THREE.AnimationMixer(tablegltf.scene);
@@ -62,7 +62,7 @@ loader.load('/dist/assets/models/glTF/mesa.glb', function ( tablegltf ) {
     console.error( error );
 });
 
-loader.load('/dist/assets/models/glTF/litleo.glb', function ( litleogltf ) {
+loader.load('assets/models/glTF/litleo.glb', function ( litleogltf ) {
     var litleo = litleogltf.scene;
     litleo3D.add(litleo);
     scene.add(litleo);
@@ -70,7 +70,7 @@ loader.load('/dist/assets/models/glTF/litleo.glb', function ( litleogltf ) {
     console.error( error );
 });
 
-loader.load('/dist/assets/models/glTF/locomocion2D.glb', function ( locomociongltf ) {
+loader.load('assets/models/glTF/locomocion2D.glb', function ( locomociongltf ) {
     var locomocion = locomociongltf.scene;
     locomocion2D.add(locomocion);
     mixer2Dloc = new THREE.AnimationMixer(locomociongltf.scene);
@@ -84,7 +84,7 @@ loader.load('/dist/assets/models/glTF/locomocion2D.glb', function ( locomociongl
     console.error( error );
 });
 
-loader.load('/dist/assets/models/glTF/trampolin.glb', function ( clay1gltf ) {
+loader.load('assets/models/glTF/trampolin.glb', function ( clay1gltf ) {
     var clay1 = clay1gltf.scene;
     clay13D.add(clay1);
     clay1.traverse (function (child) {
@@ -188,14 +188,14 @@ Array(100).fill().forEach(addStar);
 var runtime = new ShaderRuntime();
 
 // // BallDeform
- runtime.load( '/dist/assets/models/Shaders/BallDeform.json', function( shaderData ) {
+ runtime.load( 'assets/models/Shaders/BallDeform.json', function( shaderData ) {
      var ballshadermat = runtime.get( shaderData.name );
     cubepix.material = ballshadermat;
     runtime.updateShaders( clock.getElapsedTime() );
  });
 
 // RippleKnot
- runtime.load( '/dist/assets/models/Shaders/StarsNormals.json', function( shaderData ) {
+ runtime.load( 'assets/models/Shaders/StarsNormals.json', function( shaderData ) {
      var starsshadermat = runtime.get( shaderData.name );
      spherepix.material = starsshadermat;
      runtime.updateShaders( clock.getElapsedTime() );
