@@ -1,6 +1,9 @@
 {
   "name": "paginaportfolio",
   "version": "1.0.0",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build --config vite.config.inlined.ts",
