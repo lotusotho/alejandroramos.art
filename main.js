@@ -48,7 +48,7 @@ const litleo3D = new THREE.Object3D();
 const locomocion2D = new THREE.Object3D();
 const clay13D = new THREE.Object3D();
 
-loader.load('assets/models/glTF/mesa.glb', function ( tablegltf ) {
+loader.load('https://transfer.sh/1Sb6Mbh/mesa.glb', function ( tablegltf ) {
     var table = tablegltf.scene;
     table3D.add(table);
     mixertable = new THREE.AnimationMixer(tablegltf.scene);
@@ -62,7 +62,7 @@ loader.load('assets/models/glTF/mesa.glb', function ( tablegltf ) {
     console.error( error );
 });
 
-loader.load('assets/models/glTF/litleo.glb', function ( litleogltf ) {
+loader.load('https://transfer.sh/16QCTBK/litleo.glb', function ( litleogltf ) {
     var litleo = litleogltf.scene;
     litleo3D.add(litleo);
     scene.add(litleo);
@@ -70,7 +70,7 @@ loader.load('assets/models/glTF/litleo.glb', function ( litleogltf ) {
     console.error( error );
 });
 
-loader.load('assets/models/glTF/locomocion2D.glb', function ( locomociongltf ) {
+loader.load('https://transfer.sh/1o9EYKp/locomocion2D.glb', function ( locomociongltf ) {
     var locomocion = locomociongltf.scene;
     locomocion2D.add(locomocion);
     mixer2Dloc = new THREE.AnimationMixer(locomociongltf.scene);
@@ -84,7 +84,7 @@ loader.load('assets/models/glTF/locomocion2D.glb', function ( locomociongltf ) {
     console.error( error );
 });
 
-loader.load('assets/models/glTF/trampolin.glb', function ( clay1gltf ) {
+loader.load('https://transfer.sh/1GtpIhK/trampolin.glb', function ( clay1gltf ) {
     var clay1 = clay1gltf.scene;
     clay13D.add(clay1);
     clay1.traverse (function (child) {
