@@ -48,7 +48,7 @@ const litleo3D = new THREE.Object3D();
 const locomocion2D = new THREE.Object3D();
 const clay13D = new THREE.Object3D();
 
-loader.load('assets/models/glTF/glTF/mesa.glb', function ( tablegltf ) {
+loader.load('assets/models/glTF/mesa.glb', function ( tablegltf ) {
     var table = tablegltf.scene;
     table3D.add(table);
     mixertable = new THREE.AnimationMixer(tablegltf.scene);
