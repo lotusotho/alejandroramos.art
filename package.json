@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "serve": "vite build && vite preview",
+    "build": "vite build --config vite.config.inlined.ts",
+    "serve": "vite build --config vite.config.inlined.ts && vite preview",
     "inlined-build": "vite build --config vite.config.inlined.ts",
     "inlined-preview": "vite preview",
     "inlined-preview-build": "vite build --config vite.config.inlined.ts && start ./dist/index.html",
