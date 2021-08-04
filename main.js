@@ -75,6 +75,11 @@ loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/locomocion2D.g
     locomocion2D.add(locomocion);
     mixer2Dloc = new THREE.AnimationMixer(locomociongltf.scene);
     mixers.push(mixer2Dloc);
+    locomocion.traverse (function (child) {
+        if (child instanceof THREE.Mesh) {
+            child.frustumCulled = false;
+        }
+    });
     locomociongltf.animations.forEach(( clip ) => {
         mixer2Dloc.clipAction(clip).play();
     });
@@ -214,7 +219,7 @@ function animate() {
 
     //  mixertable.update( delta );
 
-    // // var time = clock.getElapsedTime();
+    var time = clock.getElapsedTime();
 
     //  mixer2Dloc.update( delta );
 
@@ -222,7 +227,7 @@ function animate() {
 
     renderer.render(scene, camera);
 
-    // runtime.updateShaders( time );
+    runtime.updateShaders( time );
 }
 
 // function animatetorus() {
