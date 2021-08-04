@@ -89,7 +89,7 @@ loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/locomocion2D.g
     console.error( error );
 });
 
-loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/clay1.glb', function ( clay1gltf ) {
+loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/trampolin.glb', function ( clay1gltf ) {
     var clay1 = clay1gltf.scene;
     clay13D.add(clay1);
     clay1.traverse (function (child) {
@@ -98,10 +98,10 @@ loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/clay1.glb', fu
         }
     });
     mixerclay1 = new THREE.AnimationMixer(clay1gltf.scene);
-    mixers.push(mixerclay1);
     clay1gltf.animations.forEach(( clip ) => {
         mixerclay1.clipAction(clip).play();
     });
+    mixers.push(mixerclay1);
     scene.add(clay1);
 }, undefined, function ( error ) {
     console.error( error );
