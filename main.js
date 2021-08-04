@@ -48,6 +48,17 @@ const litleo3D = new THREE.Object3D();
 const locomocion2D = new THREE.Object3D();
 const clay13D = new THREE.Object3D();
 
+window.addEventListener( 'resize', onWindowResize, false );
+
+function onWindowResize(){
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+}
+
 loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/mesa.glb', function ( tablegltf ) {
     var table = tablegltf.scene;
     table3D.add(table);
@@ -120,7 +131,7 @@ const planegeo = new THREE.PlaneGeometry(1000, 300, 100, 100);
     plane.position.z = -70;
     plane.renderOrder = 4;
 
-const cubegeo = new THREE.SphereGeometry(3, 30, 30);
+const cubegeo = new THREE.SphereGeometry(3, 70, 70);
 const cubemesh = new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true})
 const cubepix = new THREE.Mesh(cubegeo, cubemesh);
 cubepix.traverse (function (child) {
