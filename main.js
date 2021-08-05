@@ -196,7 +196,7 @@ Array(100).fill().forEach(addStar);
 var runtime = new ShaderRuntime();
 
 // // BallDeform
- runtime.load( '/https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/BallDeform.json', function( shaderData ) {
+ runtime.load( 'https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/BallDeform.json', function( shaderData ) {
      var ballshadermat = runtime.get( shaderData.name );
     cubepix.material = ballshadermat;
     runtime.updateShaders( clock.getElapsedTime() );
@@ -222,7 +222,7 @@ function animate() {
 
     //  mixertable.update( delta );
 
-    // // var time = clock.getElapsedTime();
+    var time = clock.getElapsedTime();
 
     //  mixer2Dloc.update( delta );
 
@@ -230,7 +230,7 @@ function animate() {
 
     renderer.render(scene, camera);
 
-    // runtime.updateShaders( time );
+    runtime.updateShaders( time );
 }
 
 // function animatetorus() {
