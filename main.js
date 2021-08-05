@@ -123,7 +123,7 @@ const planegeo = new THREE.PlaneGeometry(1000, 300, 100, 100);
     plane.position.z = -70;
     plane.renderOrder = 4;
 
-const cubegeo = new THREE.SphereGeometry(3, 30, 30);
+const cubegeo = new THREE.SphereGeometry(3, 70, 70);
 const cubemesh = new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true})
 const cubepix = new THREE.Mesh(cubegeo, cubemesh);
 cubepix.traverse (function (child) {
