@@ -8,6 +8,8 @@ import { OrbitControls } from 'https://cdn.skypack.dev/three@0.130.1/examples/js
 
 import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.130.1/examples/jsm/loaders/GLTFLoader.js';
 
+import { DRACOLoader } from 'https://cdn.skypack.dev/three@0.130.1/examples/jsm/loaders/DRACOLoader.js';
+
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500);
@@ -22,7 +24,7 @@ const renderer = new THREE.WebGLRenderer({
     antialias: true,
 });
 
-var mixertable, mixer2Dloc, mixerclay1;
+var mixertable, mixer2Dloc, mixertrampolin;
 
 scene.background = new THREE.Color( 0x061121 );
 
@@ -42,13 +44,19 @@ renderer.render(scene, camera);
 
 const loader = new GLTFLoader();
 
+const dracoLoader = new DRACOLoader();
+
+dracoLoader.setDecoderPath( 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/js/libs/draco/' );
+
+loader.setDRACOLoader( dracoLoader );
+
 // Load 3D models
 const table3D = new THREE.Object3D();
 const litleo3D = new THREE.Object3D();
 const locomocion2D = new THREE.Object3D();
-const clay13D = new THREE.Object3D();
+const trampolin3D = new THREE.Object3D();
 
-loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/mesa.glb', function ( tablegltf ) {
+loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/mesa-processed.glb', function ( tablegltf ) {
     var table = tablegltf.scene;
     table3D.add(table);
     mixertable = new THREE.AnimationMixer(tablegltf.scene);
@@ -62,7 +70,7 @@ loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/mesa.glb', fun
     console.error( error );
 });
 
-loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/litleo.glb', function ( litleogltf ) {
+loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/litleo-processed.glb', function ( litleogltf ) {
     var litleo = litleogltf.scene;
     litleo3D.add(litleo);
     scene.add(litleo);
@@ -70,7 +78,7 @@ loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/litleo.glb', f
     console.error( error );
 });
 
-loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/locomocion2D.glb', function ( locomociongltf ) {
+loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/locomocion2D-processed.glb', function ( locomociongltf ) {
     var locomocion = locomociongltf.scene;
     locomocion2D.add(locomocion);
     mixer2Dloc = new THREE.AnimationMixer(locomociongltf.scene);
@@ -84,20 +92,20 @@ loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/locomocion2D.g
     console.error( error );
 });
 
-loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/clay1.glb', function ( clay1gltf ) {
-    var clay1 = clay1gltf.scene;
-    clay13D.add(clay1);
-    clay1.traverse (function (child) {
+loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/trampolin-processed.glb', function ( trampolingltf ) {
+    var trampolin = trampolingltf.scene;
+    trampolin3D.add(trampolin);
+    trampolin.traverse (function (child) {
         if (child instanceof THREE.Mesh) {
             child.frustumCulled = false;
         }
     });
-    mixerclay1 = new THREE.AnimationMixer(clay1gltf.scene);
-    mixers.push(mixerclay1);
-    clay1gltf.animations.forEach(( clip ) => {
-        mixerclay1.clipAction(clip).play();
+    mixertrampolin = new THREE.AnimationMixer(trampolingltf.scene);
+    mixers.push(mixertrampolin);
+    trampolingltf.animations.forEach(( clip ) => {
+        mixertrampolin.clipAction(clip).play();
     });
-    scene.add(clay1);
+    scene.add(trampolin);
 }, undefined, function ( error ) {
     console.error( error );
 });
@@ -218,7 +226,7 @@ function animate() {
 
     //  mixer2Dloc.update( delta );
 
-    //  mixerclay1.update( delta );
+    //  mixertrampolin.update( delta );
 
     renderer.render(scene, camera);
 
