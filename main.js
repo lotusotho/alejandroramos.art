@@ -38,6 +38,17 @@ renderer.outputEncoding = THREE.sRGBEncoding;
 
 renderer.render(scene, camera);
 
+window.addEventListener( 'resize', onWindowResize, false );
+
+function onWindowResize(){
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+}
+
 // const geometry = new THREE.TorusGeometry(100, 1, 16, 100);
 // const material = new THREE.MeshStandardMaterial({color: 0xffffff});
 // const torus1 = new THREE.Mesh(geometry, material);
