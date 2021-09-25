@@ -24,7 +24,7 @@ const renderer = new THREE.WebGLRenderer({
     antialias: true,
 });
 
-var mixertable, mixer2Dloc, mixertrampolin;
+var mixertable, mixer2Dloc; //mixertrampolin
 
 scene.background = new THREE.Color( 0x061121 );
 
@@ -65,7 +65,7 @@ loader.setDRACOLoader( dracoLoader );
 const table3D = new THREE.Object3D();
 const litleo3D = new THREE.Object3D();
 const locomocion2D = new THREE.Object3D();
-const trampolin3D = new THREE.Object3D();
+// const trampolin3D = new THREE.Object3D();
 
 loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/mesa-processed.glb', function ( tablegltf ) {
     var table = tablegltf.scene;
@@ -103,23 +103,23 @@ loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/locomocion2D-p
     console.error( error );
 });
 
-loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/trampolin-processed.glb', function ( trampolingltf ) {
-    var trampolin = trampolingltf.scene;
-    trampolin3D.add(trampolin);
-    trampolin.traverse (function (child) {
-        if (child instanceof THREE.Mesh) {
-            child.frustumCulled = false;
-        }
-    });
-    mixertrampolin = new THREE.AnimationMixer(trampolingltf.scene);
-    mixers.push(mixertrampolin);
-    trampolingltf.animations.forEach(( clip ) => {
-        mixertrampolin.clipAction(clip).play();
-    });
-    scene.add(trampolin);
-}, undefined, function ( error ) {
-    console.error( error );
-});
+// loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/trampolin-processed.glb', function ( trampolingltf ) {
+//     var trampolin = trampolingltf.scene;
+//     trampolin3D.add(trampolin);
+//     trampolin.traverse (function (child) {
+//         if (child instanceof THREE.Mesh) {
+//             child.frustumCulled = false;
+//         }
+//     });
+//     mixertrampolin = new THREE.AnimationMixer(trampolingltf.scene);
+//     mixers.push(mixertrampolin);
+//     trampolingltf.animations.forEach(( clip ) => {
+//         mixertrampolin.clipAction(clip).play();
+//     });
+//     scene.add(trampolin);
+// }, undefined, function ( error ) {
+//     console.error( error );
+// });
 
 const planegeo = new THREE.PlaneGeometry(1000, 300, 100, 100);
     const planemat = new THREE.MeshPhongMaterial({color: 0x80c1ff, transparent: true, opacity: 0.5, depthTest: true})
