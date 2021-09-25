@@ -29,7 +29,6 @@ THE SOFTWARE.
 /// <reference types="node" />
 
 import * as fs from 'fs'
-import { Matcher } from './anymatch'
 
 export interface FSWatcher extends fs.FSWatcher {
   options: WatchOptions
@@ -118,7 +117,7 @@ export interface WatchOptions {
    * (the path), second time with two arguments (the path and the
    * [`fs.Stats`](https://nodejs.org/api/fs.html#fs_class_fs_stats) object of that path).
    */
-  ignored?: Matcher
+  ignored?: any
 
   /**
    * If set to `false` then `add`/`addDir` events are also emitted for matching paths while
