@@ -65,6 +65,7 @@ loader.setDRACOLoader( dracoLoader );
 const table3D = new THREE.Object3D();
 const litleo3D = new THREE.Object3D();
 const locomocion2D = new THREE.Object3D();
+const lowpolyface3D = new THREE.Object3D();
 // const trampolin3D = new THREE.Object3D();
 
 loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/mesa-processed.glb', function ( tablegltf ) {
@@ -99,6 +100,24 @@ loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/locomocion2D-p
     });
     scene.add(locomocion2D);
     locomocion2D.position.setX(5);
+}, undefined, function ( error ) {
+    console.error( error );
+});
+
+loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/lowpolyface.glb', function ( lowpolyfacegltf ) {
+    var lowpolyface = lowpolyfacegltf.scene;
+    lowpolyface.traverse((node) => {
+        if (!node.isMesh) return;
+        node.material.wireframe = true;
+        node.material.color = new THREE.Color(0x5d6cf5);
+    });
+    lowpolyface3D.add(lowpolyface);
+    //mixer2Dlowpoly = new THREE.AnimationMixer(lowpolyfacegltf.scene);
+    //mixers.push(mixer2Dlowpoly);
+    scene.add(lowpolyface3D);
+    lowpolyface3D.position.setX(21);
+    lowpolyface3D.position.setY(-130);
+    lowpolyface3D.position.setZ(-23);
 }, undefined, function ( error ) {
     console.error( error );
 });
@@ -155,7 +174,7 @@ cubepix.traverse (function (child) {
          }
      });
      spherepix.position.setZ(-10);
-     spherepix.position.setY(-66);
+     spherepix.position.setY(-98);
      spherepix.position.setX(-5);
      scene.add(spherepix);
 
@@ -219,6 +238,7 @@ var runtime = new ShaderRuntime();
      spherepix.material = starsshadermat;
      runtime.updateShaders( clock.getElapsedTime() );
 });
+
 // Textures
 // Animations
 function animate() {
@@ -268,6 +288,7 @@ function moveCamera() {
     
     cubestaticpix.scale.x += 0.2;
     cubepix.rotation.x += 0.05;
+    lowpolyface3D.rotation.y -= 0.009;
 
     camera.position.y = -t * -0.04;
     camera.position.z = t * -0.0002;
