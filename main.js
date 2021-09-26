@@ -108,8 +108,7 @@ loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/lowpolyface.gl
     var lowpolyface = lowpolyfacegltf.scene;
     lowpolyface.traverse((node) => {
         if (!node.isMesh) return;
-        node.material.wireframe = true;
-        node.material.color = new THREE.Color(0x5d6cf5);
+        node.material = new THREE.MeshToonMaterial({color: 0x9e5c15, transparent: false, opacity: 1});
     });
     lowpolyface3D.add(lowpolyface);
     //mixer2Dlowpoly = new THREE.AnimationMixer(lowpolyfacegltf.scene);
