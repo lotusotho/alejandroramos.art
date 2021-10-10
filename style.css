@@ -9,11 +9,9 @@ canvas {
   --dark-bg: rgba(15, 15, 15, 0.95);
   --spacing: 350px;
 
-  font-family: 'Epilogue', sans-serif;
   font-weight: 400;
   font-style: normal;
 }
-
 
 main {
   width: 100vw;
@@ -29,9 +27,14 @@ main {
 }
 
 h1, h2, h3, blockquote {
-  font-family: 'Epilogue', sans-serif;
+  font-family: 'Syne', sans-serif;
   font-weight: 700;
   font-style: normal;
+}
+
+header p, section p {
+  font-family: 'Poppins', sans-serif;
+  text-align: justify;
 }
 
 canvas {
@@ -128,7 +131,7 @@ canvas {
   }
 
   a {
-    font-family: 'Epilogue', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;
     font-style: normal;
     color: coral;

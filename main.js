@@ -86,6 +86,7 @@ loader.load('https://portfoliobuckets3.s3.eu-west-3.amazonaws.com/litleo-process
     var litleo = litleogltf.scene;
     litleo3D.add(litleo);
     scene.add(litleo);
+    litleo.setY(-70);
 }, undefined, function ( error ) {
     console.error( error );
 });
@@ -162,7 +163,7 @@ cubepix.traverse (function (child) {
     });
     scene.add(cubepix);
     cubepix.position.setZ(-10);
-    cubepix.position.setY(-35);
+    cubepix.position.setY(2);
     cubepix.position.setX(9);
     
  const spheregeo = new THREE.TorusKnotGeometry(1, 0.25, 254, 8, 3, 5);
@@ -191,10 +192,10 @@ cubestaticpix.traverse (function (child) {
         scene.add(cubestaticpix);
 //scene.add(torus1);
 
-const pointLight = new THREE.PointLight(0xffffff)
+const pointLight = new THREE.PointLight(0xe6e6e6)
 pointLight.position.set(5,5,30)
 
-const ambientLight = new THREE.AmbientLight(0xffffff);
+const ambientLight = new THREE.AmbientLight(0xe6e6e6);
 scene.add(pointLight, ambientLight);
 
 // const lightHelper = new THREE.PointLightHelper(pointLight)
