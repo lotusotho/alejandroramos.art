@@ -153,6 +153,7 @@ const planegeo = new THREE.PlaneGeometry(1000, 300, 100, 100);
     plane.position.z = -70;
     plane.renderOrder = 4;
 
+    //Shader Sphere
 const cubegeo = new THREE.SphereGeometry(3, 70, 70);
 const cubemesh = new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true})
 const cubepix = new THREE.Mesh(cubegeo, cubemesh);
@@ -163,7 +164,7 @@ cubepix.traverse (function (child) {
     });
     scene.add(cubepix);
     cubepix.position.setZ(-10);
-    cubepix.position.setY(2);
+    cubepix.position.setY(-35);
     cubepix.position.setX(9);
     
  const spheregeo = new THREE.TorusKnotGeometry(1, 0.25, 254, 8, 3, 5);
